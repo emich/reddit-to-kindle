@@ -1,0 +1,16 @@
+{
+  "name": "kindle-nosleep",
+  "version": "0.0.1",
+  "description": "A kindle book generator for the nosleep reddit subreddit.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "kindle-periodical": "^0.2.5",
+    "request": "^2.65.0",
+    "html-entities": "^1.2.0"
+  }
+}
