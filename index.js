@@ -2,7 +2,7 @@ var periodical = require('kindle-periodical');
 var request = require('request');
 var Entities = require('html-entities').AllHtmlEntities;
 
-request('https://www.reddit.com/r/nosleep/.json', function (error, response, body) {
+request('https://www.reddit.com/r/nosleep/top/.json?sort=top&t=week', function (error, response, body) {
   if (!error && response.statusCode == 200) {
     generate(JSON.parse(body));
   }
@@ -15,7 +15,10 @@ function generate(body){
 	var entities = new Entities();
 
 	for(var i=2;i<itemCount;i++){
-		var text = children[i].data.selftext.replace(/[\u2018\u2019]/g, "'").replace(/[\u201C\u201D]/g, '"').replace(/(?:\r\n|\r|\n)/g, '<br />');
+		var text = children[i].data.selftext
+			.replace(/[\u2018\u2019]/g, "'") //
+			.replace(/[\u201C\u201D]/g, '"') //
+			.replace(/(?:\r\n|\r|\n)/g, '<br />');
 
 		var article = {
 			"title" : children[i].data.title,
@@ -23,11 +26,13 @@ function generate(body){
 			"content" : '<body>'+text+'</body>'
 		};
 
-		articles.push(article);
+		if(children[i].data.link_flair_text!='Series'){
+			articles.push(article);
+		}
 	}
 
 	var bookData = {
-		"title"         : 'No Sleep1',
+		"title"         : 'No Sleep',
 	    "creator"       : 'Reddit community',
 	    "publisher"     : 'reddit.com',
 	    "subject"       : 'No Sleep ebook generated from reddit',
